@@ -1,0 +1,9 @@
+{
+  "name": "Client",
+  "version": "1.0.0",
+  "description": "Front-end code for the Team 4 LambdaMUD Build Week project. ",
+  "main": "index.js",
+  "repository": "https://github.com/buildweekpt3-mud/Client.git",
+  "author": "Oliver Abreu",
+  "license": "BSD-3-Clause AND MIT"
+}
