@@ -34,7 +34,8 @@ class App extends Component {
                 { description: room.description },
                 { items: room.items },
                 { visited: true }
-              ]
+              ],
+              '2': [{ x: 1, y: 2 }]
             })
           )
         })
