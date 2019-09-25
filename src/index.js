@@ -1,6 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
+
 import App from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+import './index.css'
+
+ReactDOM.render(
+  <BrowserRouter>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </BrowserRouter>,
+  document.getElementById('root')
+)
