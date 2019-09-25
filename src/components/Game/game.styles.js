@@ -1,6 +1,42 @@
 import { transform } from '@babel/core'
 
 const styles = ({ spacing, breakpoints, palette }) => ({
+  container: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  topBar: {
+    width: '100vw',
+    background: 'black',
+    color: '#00FF11',
+    padding: spacing(2)
+  },
+  bottomBar: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100vw',
+    minHeight: 150,
+    background: 'black',
+    color: '#00FF11',
+    padding: spacing(2)
+  },
+  listContainer: {
+    height: '100%',
+    marginRight: spacing(2)
+  },
+  lists: {
+    width: 300,
+    padding: 0,
+    margin: 0,
+    background: 'rgba(255,255,255,0.05)'
+  },
+  buttons: {
+    marginRight: spacing(2)
+  },
   game: {
     position: 'relative',
     background: 'black',

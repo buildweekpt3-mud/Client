@@ -1,6 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  ButtonGroup
+} from '@material-ui/core'
 import Canvas from './Canvas'
 import styles from './game.styles'
 import background from './background.png'
@@ -19,7 +26,8 @@ class Game extends React.Component {
     s: null,
     w: null,
     items: [],
-    players: []
+    players: [],
+    name: '...'
   }
   componentDidMount() {
     axios
@@ -39,7 +47,8 @@ class Game extends React.Component {
           s: room.directions.s,
           w: room.directions.w,
           items: room.items,
-          players: res.data.players
+          players: res.data.players,
+          name: res.data.name
         })
       })
       .catch(err => console.log(err))
@@ -66,7 +75,8 @@ class Game extends React.Component {
           s: room.directions.s,
           w: room.directions.w,
           items: room.items,
-          players: res.data.players
+          players: res.data.players,
+          name: res.data.name
         })
       })
       .catch(err => console.log(err))
@@ -74,12 +84,9 @@ class Game extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div>
+      <div className={classes.container}>
+        <div className={classes.topBar}>{this.state.name}</div>
         <div className={classes.game}>
-          {/* <Canvas
-            currentRoom={this.state.currentRoom}
-            visited_room_data={JSON.parse(window.localStorage.getItem('map'))}
-          /> */}
           <img
             className={classes.background}
             src={background}
@@ -121,6 +128,38 @@ class Game extends React.Component {
               alt="west door"
             />
           ) : null}
+        </div>
+        <div className={classes.bottomBar}>
+          <ButtonGroup
+            className={classes.buttons}
+            size="large"
+            aria-label="large outlined button group">
+            <Button>Take</Button>
+            <Button>Drop</Button>
+          </ButtonGroup>
+          <div className={classes.listContainer}>
+            <div>Items in Room:</div>
+            <List className={classes.lists} dense>
+              {this.state.items.map(item => (
+                <ListItem>
+                  <ListItemText
+                    primary={item.name}
+                    secondary={item.description}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+          <div className={classes.listContainer}>
+            <div>Other Players in Room:</div>
+            <List className={classes.lists} dense>
+              {this.state.players.map(name => (
+                <ListItem>
+                  <ListItemText primary={name} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
         </div>
       </div>
     )
