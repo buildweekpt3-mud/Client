@@ -6,7 +6,8 @@ import {
   ListItem,
   ListItemText,
   Button,
-  ButtonGroup
+  ButtonGroup,
+  Typography
 } from '@material-ui/core'
 import Canvas from './Canvas'
 import styles from './game.styles'
@@ -15,6 +16,7 @@ import top from './top.png'
 import right from './right.png'
 import bottom from './bottom.png'
 import left from './left.png'
+// import visited_room_data from '../../data/visited_room_data.js'
 
 class Game extends React.Component {
   state = {
@@ -65,6 +67,7 @@ class Game extends React.Component {
         }
       )
       .then(res => {
+        console.log(res)
         let room = res.data.room
         this.setState({
           currentRoom: room.id,
@@ -74,7 +77,7 @@ class Game extends React.Component {
           e: room.directions.e,
           s: room.directions.s,
           w: room.directions.w,
-          items: room.items,
+          items: room.items || [],
           players: res.data.players,
           name: res.data.name
         })
@@ -86,6 +89,7 @@ class Game extends React.Component {
     return (
       <div className={classes.container}>
         <div className={classes.topBar}>{this.state.name}</div>
+        {/* <Canvas visited_room_data={visited_room_data}></Canvas> */}
         <div className={classes.game}>
           <img
             className={classes.background}
@@ -140,8 +144,8 @@ class Game extends React.Component {
           <div className={classes.listContainer}>
             <div>Items in Room:</div>
             <List className={classes.lists} dense>
-              {this.state.items.map(item => (
-                <ListItem>
+              {this.state.items.map((item, i) => (
+                <ListItem key={('item-', i)}>
                   <ListItemText
                     primary={item.name}
                     secondary={item.description}
@@ -153,12 +157,18 @@ class Game extends React.Component {
           <div className={classes.listContainer}>
             <div>Other Players in Room:</div>
             <List className={classes.lists} dense>
-              {this.state.players.map(name => (
-                <ListItem>
+              {this.state.players.map((name, i) => (
+                <ListItem key={('player-', i)}>
                   <ListItemText primary={name} />
                 </ListItem>
               ))}
             </List>
+          </div>
+          <div>
+            <Typography variant="h4">{this.state.title}</Typography>
+            <Typography variant="subtitle1">
+              {this.state.description}
+            </Typography>
           </div>
         </div>
       </div>
