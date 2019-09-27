@@ -10,6 +10,7 @@ import {
   Typography
 } from '@material-ui/core'
 import Canvas from './Canvas'
+import TakeItems from './TakeItems/TakeItems'
 import styles from './game.styles'
 import background from './background.png'
 import top from './top.png'
@@ -29,8 +30,11 @@ class Game extends React.Component {
     w: null,
     items: [],
     players: [],
-    name: '...'
+    name: '...',
+    open: false,
+    selectedItem: null
   }
+
   componentDidMount() {
     axios
       .get('https://djangomud.herokuapp.com/api/init', {
@@ -53,7 +57,20 @@ class Game extends React.Component {
           name: res.data.name
         })
       })
-      .catch(err => console.log(err))
+      .catch(err => this.props.history.push('/signin'))
+  }
+  setOpen = open => {
+    this.setState({ open })
+  }
+  setItem = item => {
+    this.setState({ selectedItem: item })
+  }
+  handleClickOpen = () => {
+    this.setOpen(true)
+  }
+
+  handleClose = _ => {
+    this.setOpen(false)
   }
   handleMove = e => {
     axios
@@ -88,6 +105,14 @@ class Game extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.container}>
+        <TakeItems
+          items={this.state.items}
+          setItem={this.setItem}
+          open={this.state.open}
+          onClose={this.handleClose}
+          setValue={this.setItem}
+          value={this.state.selectedItem}
+        />
         <div className={classes.topBar}>{this.state.name}</div>
         {/* <Canvas visited_room_data={visited_room_data}></Canvas> */}
         <div className={classes.game}>
@@ -138,7 +163,7 @@ class Game extends React.Component {
             className={classes.buttons}
             size="large"
             aria-label="large outlined button group">
-            <Button>Take</Button>
+            <Button onClick={this.handleClickOpen}>Take</Button>
             <Button>Drop</Button>
           </ButtonGroup>
           <div className={classes.listContainer}>
