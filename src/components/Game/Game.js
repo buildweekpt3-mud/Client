@@ -9,8 +9,10 @@ import {
   ButtonGroup,
   Typography
 } from '@material-ui/core'
+import Canvas from './Canvas'
 import TakeItems from './TakeItems/TakeItems'
 import DropItems from './DropItems/DropItems'
+import visited_room_data from '../../data/visited_room_data'
 import styles from './game.styles'
 import background from './background.png'
 import top from './top.png'
@@ -164,49 +166,52 @@ class Game extends React.Component {
 
           <Button onClick={this.signout}>Sign Out</Button>
         </div>
-        {/* <Canvas visited_room_data={visited_room_data}></Canvas> */}
-        <div className={classes.game}>
-          <img
-            className={classes.background}
-            src={background}
-            alt="dungeon background"
-          />
-          {this.state.n ? (
+        <div className={classes.gameContainer}>
+          <div className={classes.game}>
             <img
-              className={classes.top}
-              name="n"
-              src={top}
-              onClick={this.handleMove}
-              alt="north door"
+              className={classes.background}
+              src={background}
+              alt="dungeon background"
             />
-          ) : null}
-          {this.state.e ? (
-            <img
-              className={classes.right}
-              name="e"
-              src={right}
-              onClick={this.handleMove}
-              alt="east door"
-            />
-          ) : null}
-          {this.state.s ? (
-            <img
-              className={classes.bottom}
-              name="s"
-              src={bottom}
-              onClick={this.handleMove}
-              alt="south door"
-            />
-          ) : null}
-          {this.state.w ? (
-            <img
-              className={classes.left}
-              name="w"
-              src={left}
-              onClick={this.handleMove}
-              alt="west door"
-            />
-          ) : null}
+            {this.state.n ? (
+              <img
+                className={classes.top}
+                name="n"
+                src={top}
+                onClick={this.handleMove}
+                alt="north door"
+              />
+            ) : null}
+            {this.state.e ? (
+              <img
+                className={classes.right}
+                name="e"
+                src={right}
+                onClick={this.handleMove}
+                alt="east door"
+              />
+            ) : null}
+            {this.state.s ? (
+              <img
+                className={classes.bottom}
+                name="s"
+                src={bottom}
+                onClick={this.handleMove}
+                alt="south door"
+              />
+            ) : null}
+            {this.state.w ? (
+              <img
+                className={classes.left}
+                name="w"
+                src={left}
+                onClick={this.handleMove}
+                alt="west door"
+              />
+            ) : null}
+          </div>
+
+          <Canvas visited_room_data={visited_room_data}></Canvas>
         </div>
         <div className={classes.bottomBar}>
           <div className={classes.room}>
