@@ -1,6 +1,4 @@
-import { transform } from '@babel/core'
-
-const styles = ({ spacing, breakpoints, palette }) => ({
+const styles = ({ spacing }) => ({
   container: {
     width: '100vw',
     height: '100vh',
@@ -10,6 +8,9 @@ const styles = ({ spacing, breakpoints, palette }) => ({
     alignItems: 'center'
   },
   topBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: '100vw',
     background: 'black',
     color: '#00FF11',
@@ -76,6 +77,9 @@ const styles = ({ spacing, breakpoints, palette }) => ({
     height: 140,
     transform: 'translate(0, -50%)',
     cursor: 'pointer'
+  },
+  room: {
+    marginRight: spacing(2)
   }
 })
 export default styles

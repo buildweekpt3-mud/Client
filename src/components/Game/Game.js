@@ -9,7 +9,6 @@ import {
   ButtonGroup,
   Typography
 } from '@material-ui/core'
-import Canvas from './Canvas'
 import TakeItems from './TakeItems/TakeItems'
 import DropItems from './DropItems/DropItems'
 import styles from './game.styles'
@@ -18,7 +17,6 @@ import top from './top.png'
 import right from './right.png'
 import bottom from './bottom.png'
 import left from './left.png'
-// import visited_room_data from '../../data/visited_room_data.js'
 
 class Game extends React.Component {
   state = {
@@ -120,6 +118,27 @@ class Game extends React.Component {
       })
       .catch(err => console.log(err))
   }
+  signout = _ => {
+    console.log(`Token ${window.localStorage.getItem('Token')}`)
+    axios
+      .post(
+        'https://djangomud.herokuapp.com/api/auth/logout',
+        {},
+        {
+          headers: {
+            Authorization: `Token ${window.localStorage.getItem('Token')}`
+          }
+        }
+      )
+      .then(res => {
+        console.log(res)
+        window.localStorage.removeItem('map')
+        window.localStorage.removeItem('Token')
+        window.localStorage.removeItem('user')
+        this.props.history.push('/signin')
+      })
+      .catch(err => console.log(err))
+  }
   render() {
     const { classes } = this.props
     return (
@@ -140,7 +159,11 @@ class Game extends React.Component {
           setValue={this.setItem}
           value={this.state.selectedItem}
         />
-        <div className={classes.topBar}>{this.state.name}</div>
+        <div className={classes.topBar}>
+          {this.state.name}
+
+          <Button onClick={this.signout}>Sign Out</Button>
+        </div>
         {/* <Canvas visited_room_data={visited_room_data}></Canvas> */}
         <div className={classes.game}>
           <img
@@ -186,13 +209,13 @@ class Game extends React.Component {
           ) : null}
         </div>
         <div className={classes.bottomBar}>
-          <ButtonGroup
-            className={classes.buttons}
-            size="large"
-            aria-label="large outlined button group">
-            <Button onClick={this.handleClickOpen}>Take</Button>
-            <Button onClick={this.handleClickOpenDrop}>Drop</Button>
-          </ButtonGroup>
+          <div className={classes.room}>
+            <Typography variant="h4">{this.state.title}</Typography>
+            <Typography variant="subtitle1">
+              {this.state.description}
+            </Typography>
+          </div>
+
           <div className={classes.listContainer}>
             <div>Items in Room:</div>
             <List className={classes.lists} dense>
@@ -217,7 +240,7 @@ class Game extends React.Component {
             </List>
           </div>
           <div className={classes.listContainer}>
-            <div>inventory:</div>
+            <div>Inventory:</div>
             <List className={classes.lists} dense>
               {this.state.inventory.map((item, i) => (
                 <ListItem key={('inventory-', i)}>
@@ -229,12 +252,13 @@ class Game extends React.Component {
               ))}
             </List>
           </div>
-          <div>
-            <Typography variant="h4">{this.state.title}</Typography>
-            <Typography variant="subtitle1">
-              {this.state.description}
-            </Typography>
-          </div>
+          <ButtonGroup
+            className={classes.buttons}
+            size="large"
+            aria-label="large outlined button group">
+            <Button onClick={this.handleClickOpen}>Take</Button>
+            <Button onClick={this.handleClickOpenDrop}>Drop</Button>
+          </ButtonGroup>
         </div>
       </div>
     )
