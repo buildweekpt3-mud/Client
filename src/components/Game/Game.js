@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core'
 import Canvas from './Canvas'
 import TakeItems from './TakeItems/TakeItems'
+import DropItems from './DropItems/DropItems'
 import styles from './game.styles'
 import background from './background.png'
 import top from './top.png'
@@ -29,13 +30,18 @@ class Game extends React.Component {
     s: null,
     w: null,
     items: [],
+    inventory: [],
     players: [],
     name: '...',
     open: false,
+    openDrop: false,
     selectedItem: null
   }
 
   componentDidMount() {
+    this.init()
+  }
+  init = _ => {
     axios
       .get('https://djangomud.herokuapp.com/api/init', {
         headers: {
@@ -47,6 +53,7 @@ class Game extends React.Component {
         this.setState({
           currentRoom: room.id,
           title: room.title,
+          inventory: res.data.inventory,
           description: room.description,
           n: room.directions.n,
           e: room.directions.e,
@@ -62,15 +69,27 @@ class Game extends React.Component {
   setOpen = open => {
     this.setState({ open })
   }
+  setOpenDrop = openDrop => {
+    this.setState({ openDrop })
+  }
   setItem = item => {
     this.setState({ selectedItem: item })
   }
   handleClickOpen = () => {
     this.setOpen(true)
   }
-
+  handleClickOpenDrop = () => {
+    this.setOpenDrop(true)
+  }
   handleClose = _ => {
     this.setOpen(false)
+  }
+  handleCloseDrop = _ => {
+    this.setOpenDrop(false)
+  }
+  onTakeDrop = items => {
+    this.setState({ inventory: items, selectedItem: null })
+    this.init()
   }
   handleMove = e => {
     axios
@@ -106,10 +125,18 @@ class Game extends React.Component {
     return (
       <div className={classes.container}>
         <TakeItems
+          onTake={this.onTakeDrop}
           items={this.state.items}
-          setItem={this.setItem}
           open={this.state.open}
           onClose={this.handleClose}
+          setValue={this.setItem}
+          value={this.state.selectedItem}
+        />
+        <DropItems
+          onDrop={this.onTakeDrop}
+          items={this.state.inventory}
+          open={this.state.openDrop}
+          onClose={this.handleCloseDrop}
           setValue={this.setItem}
           value={this.state.selectedItem}
         />
@@ -164,7 +191,7 @@ class Game extends React.Component {
             size="large"
             aria-label="large outlined button group">
             <Button onClick={this.handleClickOpen}>Take</Button>
-            <Button>Drop</Button>
+            <Button onClick={this.handleClickOpenDrop}>Drop</Button>
           </ButtonGroup>
           <div className={classes.listContainer}>
             <div>Items in Room:</div>
@@ -185,6 +212,19 @@ class Game extends React.Component {
               {this.state.players.map((name, i) => (
                 <ListItem key={('player-', i)}>
                   <ListItemText primary={name} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+          <div className={classes.listContainer}>
+            <div>inventory:</div>
+            <List className={classes.lists} dense>
+              {this.state.inventory.map((item, i) => (
+                <ListItem key={('inventory-', i)}>
+                  <ListItemText
+                    primary={item.name}
+                    secondary={item.description}
+                  />
                 </ListItem>
               ))}
             </List>
