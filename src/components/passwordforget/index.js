@@ -23,7 +23,7 @@ class PasswordForgetFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { email } = this.state
+    // const { email } = this.state
     event.preventDefault()
   }
 

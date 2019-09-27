@@ -6,10 +6,10 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
-import styles from './takeitems.styles.js'
+import styles from './dropitems.styles.js'
 
-const TakeItems = props => {
-  const { onTake, onClose, open, items, classes, setValue, value } = props
+const DropItems = props => {
+  const { onDrop, onClose, open, items, classes, setValue, value } = props
 
   const handleChange = event => {
     setValue(event.target.value)
@@ -22,7 +22,7 @@ const TakeItems = props => {
   const handleSubmit = _ => {
     axios
       .post(
-        'https://djangomud.herokuapp.com/api/take',
+        'https://djangomud.herokuapp.com/api/drop',
         {
           item: value
         },
@@ -34,7 +34,7 @@ const TakeItems = props => {
       )
       .then(res => {
         console.log(res)
-        onTake(res.data.items)
+        onDrop(res.data.items)
         onClose()
       })
       .catch(err => console.log(err))
@@ -47,7 +47,7 @@ const TakeItems = props => {
       aria-labelledby="simple-dialog-title"
       open={open}>
       <DialogTitle className={classes.title} id="simple-dialog-title">
-        Take an item
+        Drop an item
       </DialogTitle>
       <RadioGroup
         className={classes.group}
@@ -68,8 +68,8 @@ const TakeItems = props => {
           )
         })}
       </RadioGroup>
-      <Button onClick={handleSubmit}>Take Item</Button>
+      <Button onClick={handleSubmit}>Drop Item</Button>
     </Dialog>
   )
 }
-export default withStyles(styles)(TakeItems)
+export default withStyles(styles)(DropItems)
