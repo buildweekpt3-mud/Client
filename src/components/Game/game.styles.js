@@ -7,6 +7,9 @@ const styles = ({ spacing }) => ({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  gameContainer: {
+    display: 'flex'
+  },
   topBar: {
     display: 'flex',
     justifyContent: 'space-between',

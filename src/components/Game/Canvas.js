@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import { FlexibleXYPlot, LineSeries, MarkSeries } from 'react-vis'
 import isEquivalent from '../../services/isEquivalent'
+import styles from './canvas.styles'
 // import visited_room_data from '../../data/visited_room_data.js'
 
 class Canvas extends Component {
   state = {
     dataWithColor: [],
-    links: []
+    links: [],
+    id: 0
   }
   componentDidMount() {
     this.updateMap()
@@ -24,8 +27,9 @@ class Canvas extends Component {
     }
   }
   updateMap = _ => {
-    const { currentRoom, visited_room_data } = this.props
+    let { currentRoom, visited_room_data } = this.props
     // Create arrays to hold point coordinates and links
+    currentRoom = this.state.id += 1
     let coordinates = []
     let links = []
     // Loop through each room in the room_data object
@@ -44,37 +48,43 @@ class Canvas extends Component {
         }
       }
     const dataWithColor = coordinates.map((d, i) => {
-      let final = { ...d, color: i === currentRoom ? '#F00' : '#DDD' }
+      let final = { ...d, color: i + 1 === currentRoom ? '#F00' : '#DDD' }
       if (visited_room_data[i] && visited_room_data[i][5].visited === true) {
         final.color = '#F77'
       }
       return final
     })
-    this.setState({ dataWithColor, links })
+    this.setState({ dataWithColor, links, id: currentRoom })
   }
   render() {
+    const { classes } = this.props
     return (
-      <div>
-        <FlexibleXYPlot width={600} height={600}>
-          {this.state.links.map(link => (
-            <LineSeries
-              strokeWidth="2"
-              color="#DDD"
-              data={link}
-              key={Math.random() * 100}
+      <>
+        <div onClick={() => this.updateMap()} buttonContent={'UPDATE DATA'}>
+          update
+        </div>
+        <div className={classes.canvas}>
+          <FlexibleXYPlot width={150} height={150}>
+            {this.state.links.map(link => (
+              <LineSeries
+                strokeWidth="2"
+                color="#DDD"
+                data={link}
+                key={Math.random() * 100}
+              />
+            ))}
+            <MarkSeries
+              strokeWidth={3}
+              opacity="1"
+              size="3"
+              colorType="literal"
+              data={this.state.dataWithColor}
             />
-          ))}
-          <MarkSeries
-            strokeWidth={3}
-            opacity="1"
-            size="3"
-            colorType="literal"
-            data={this.state.dataWithColor}
-          />
-        </FlexibleXYPlot>
-      </div>
+          </FlexibleXYPlot>
+        </div>
+      </>
     )
   }
 }
 
-export default Canvas
+export default withStyles(styles)(Canvas)
