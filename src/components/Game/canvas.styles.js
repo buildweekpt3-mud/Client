@@ -4,7 +4,7 @@ const styles = ({ spacing }) => ({
     position: 'absolute',
     right: 0,
     bottom: 0,
-    transform: 'translate(-50%,-100%)'
+    transform: 'translate(-50%,-100%) scaleY(-1)'
   }
 })
 export default styles

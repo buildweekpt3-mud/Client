@@ -14,7 +14,8 @@
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
-    "react-vis": "^1.11.7"
+    "react-vis": "^1.11.7",
+    "react-window": "^1.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
