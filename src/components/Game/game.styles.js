@@ -34,9 +34,23 @@ const styles = ({ spacing }) => ({
   },
   lists: {
     width: 300,
+    maxHeight: 100,
+    overflow: 'auto',
     padding: 0,
     margin: 0,
-    background: 'rgba(255,255,255,0.05)'
+    background: 'rgba(255,255,255,0.05)',
+    '&::-webkit-scrollbar': {
+      width: 10
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#666'
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#333'
+    }
   },
   buttons: {
     marginRight: spacing(2)
