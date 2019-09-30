@@ -21,6 +21,10 @@ import bottom from './bottom.png'
 import left from './left.png'
 
 class Game extends React.Component {
+  constructor(props) {
+    super(props)
+    this.child = React.createRef()
+  }
   state = {
     currentRoom: null,
     title: '',
@@ -63,6 +67,7 @@ class Game extends React.Component {
           players: res.data.players,
           name: res.data.name
         })
+        this.child.current.updateMap()
       })
       .catch(err => this.props.history.push('/signin'))
   }
@@ -117,6 +122,7 @@ class Game extends React.Component {
           players: res.data.players,
           name: res.data.name
         })
+        this.child.current.updateMap()
       })
       .catch(err => console.log(err))
   }
@@ -211,7 +217,10 @@ class Game extends React.Component {
             ) : null}
           </div>
 
-          <Canvas visited_room_data={visited_room_data}></Canvas>
+          <Canvas
+            ref={this.child}
+            currentRoom={this.state.currentRoom}
+            visited_room_data={visited_room_data}></Canvas>
         </div>
         <div className={classes.bottomBar}>
           <div className={classes.room}>
