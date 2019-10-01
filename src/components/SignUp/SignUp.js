@@ -55,6 +55,14 @@ class SignUp extends React.Component {
           window.localStorage.setItem('user', JSON.stringify(res.data.user))
           this.props.history.push('/')
         })
+        .catch(err => {
+          this.setState({
+            error: {
+              message: 'There was an error, that username might be taken!'
+            },
+            open: true
+          })
+        })
     } else {
       this.setState({
         error: { message: 'Passwords must match!' },
