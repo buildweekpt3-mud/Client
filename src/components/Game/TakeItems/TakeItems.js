@@ -33,11 +33,10 @@ const TakeItems = props => {
         }
       )
       .then(res => {
-        console.log(res)
         onTake(res.data.items)
         onClose()
       })
-      .catch(err => console.log(err))
+    // .catch(err => console.log(err))
   }
 
   return (

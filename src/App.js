@@ -4,6 +4,7 @@ import axios from 'axios'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { lightTheme, darkTheme } from './styles/maintheme'
 import { Game, SignIn, SignUp } from './services/lazyImporter'
+import Loading from './components/Loading/Loading'
 
 class App extends Component {
   state = {
@@ -48,7 +49,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={this.state.theme ? lightTheme : darkTheme}>
-        <Suspense fallback={'loading'}>
+        <Suspense fallback={loading => <Loading loading={loading} />}>
           <Switch>
             <Route exact path="/" component={Game} />
             <Route path="/signup" component={SignUp} />

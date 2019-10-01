@@ -16,7 +16,6 @@ class Canvas extends Component {
   }
   updateMap = _ => {
     let { currentRoom, visited_room_data } = this.props
-    console.log(currentRoom)
     // Create arrays to hold point coordinates and links
     let coordinates = []
     let links = []
@@ -40,7 +39,7 @@ class Canvas extends Component {
       let final = {
         x: d[0],
         y: d[1],
-        color: d[2] == currentRoom ? '#F00' : '#DDD'
+        color: d[2] == currentRoom ? '#00FF11' : '#DDD'
       }
       // if (visited_room_data[i] && visited_room_data[i][5].visited === true) {
       //   final.color = '#F77'
