@@ -16,7 +16,6 @@ class Canvas extends Component {
   }
   updateMap = _ => {
     let { currentRoom, visited_room_data } = this.props
-    console.log(currentRoom)
     // Create arrays to hold point coordinates and links
     let coordinates = []
     let links = []

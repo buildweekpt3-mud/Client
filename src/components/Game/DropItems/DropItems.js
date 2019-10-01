@@ -33,11 +33,10 @@ const DropItems = props => {
         }
       )
       .then(res => {
-        console.log(res)
         onDrop(res.data.items)
         onClose()
       })
-      .catch(err => console.log(err))
+    // .catch(err => console.log(err))
   }
 
   return (
