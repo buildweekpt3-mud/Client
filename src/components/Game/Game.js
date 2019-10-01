@@ -56,20 +56,25 @@ class Game extends React.Component {
       })
       .then(res => {
         let room = res.data.room
-        this.setState({
-          currentRoom: room.id,
-          title: room.title,
-          inventory: res.data.inventory,
-          description: room.description,
-          n: room.directions.n,
-          e: room.directions.e,
-          s: room.directions.s,
-          w: room.directions.w,
-          items: room.items,
-          players: res.data.players,
-          name: res.data.name,
-          loading: false
-        })
+        setTimeout(
+          _ =>
+            this.setState({
+              currentRoom: room.id,
+              title: room.title,
+              inventory: res.data.inventory,
+              description: room.description,
+              n: room.directions.n,
+              e: room.directions.e,
+              s: room.directions.s,
+              w: room.directions.w,
+              items: room.items,
+              players: res.data.players,
+              name: res.data.name,
+              loading: false
+            }),
+          3000
+        )
+
         if (this.child.current) this.child.current.updateMap()
       })
       .catch(err => {
