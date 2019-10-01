@@ -2,10 +2,10 @@ import { createMuiTheme } from '@material-ui/core/styles'
 
 const defaultTheme = {
   primary: {
-    light: '#ff755a',
-    main: '#ff3d2e',
-    dark: '#c30002',
-    contrastText: '#fff'
+    light: '#33ff40',
+    main: '#00FF11',
+    dark: '#00b20b',
+    contrastText: '#000'
   },
   secondary: {
     light: '#5393ff',
